@@ -1,0 +1,58 @@
+html {
+  font-family: "Lato", sans-serif;
+}
+
+.container {
+  display: flex;
+}
+
+.header {
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: black;
+  color: aliceblue;
+}
+
+.body {
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+
+h1.logo {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+button.addbook {
+  border-radius: 50%;
+  background-color: grey;
+  border: none;
+  height: 45px;
+  width: 45px;
+  font-size: 1.5rem;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: lavender;
+}
+
+footer > p {
+  padding: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media screen and (max-width: 600px) {
+  footer {
+    display: none;
+  }
+}
