@@ -10,19 +10,44 @@
     />
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="index.js"></script>
   </head>
   <header>
     <div class="header container">
       <h1 class="logo">My Library</h1>
-      <button class="addbook">+</button>
+      <button class="addbook" onclick="openForm()">+</button>
     </div>
   </header>
   <body>
+    <div class="form-popup" id="bookForm">
+      <form action="#" class="form-container">
+        <h1>Add Book</h1>
+        <label>
+          <input type="text" placeholder="Title" name="title" required
+        /></label>
+        <label>
+          <input type="text" placeholder="Author" name="author" required
+        /></label>
+        <label>
+          <input type="text" placeholder="Number of Pages" name="page#"
+        /></label>
+        <label><input type="checkbox" name="read" value="Read" />Read</label>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
     <div class="body container">
       <div class="card">
+        <button class="delete">X</button>
         <div class="card-container">
-          <h4>John Doe</h4>
-          <p>I do things</p>
+          <h4 class="title">Where the Wild Things Are</h4>
+          <br />
+          <p class="author">Maurice Sendak</p>
+          <p class="pages">15 pages</p>
+          <form action="#">
+            <label>
+              <input type="checkbox" id="read" name="read" value="Read" />Read
+            </label>
+          </form>
         </div>
       </div>
     </div>

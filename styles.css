@@ -1,5 +1,6 @@
 html {
   font-family: "Lato", sans-serif;
+  background-color: rgb(110, 98, 98);
 }
 
 .container {
@@ -9,29 +10,65 @@ html {
 .header {
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   background-color: black;
   color: aliceblue;
+  padding: 1rem;
 }
 
 .body {
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 1rem;
 }
 
 h1.logo {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 900;
 }
 
 button.addbook {
   border-radius: 50%;
   background-color: grey;
-  border: none;
+  border: 2px inset black;
   height: 45px;
   width: 45px;
   font-size: 1.5rem;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 80;
+  right: 0;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+.form-container > button {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+}
+.form-container > h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+.display {
+  display: block;
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background-color: #f1f1f1;
 }
 
 footer {
@@ -56,8 +93,18 @@ a {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 5px;
-  margin: 20px;
-  width: 10%;
+  margin: 1rem;
+  background-color: lightgrey;
+  min-height: 150px;
+  height: min-content;
+  max-width: 200px;
+  width: 40%;
+}
+
+.delete {
+  background-color: transparent;
+  border: none;
+  margin: 3px;
 }
 
 .card:hover {
@@ -66,9 +113,21 @@ a {
 
 .card-container {
   padding: 2px 16px;
+  margin-top: 10px;
 }
 
-@media screen and (max-width: 600px) {
+.card-container > * {
+  text-align: center;
+  margin: 5px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+h4 {
+  font-size: 1rem !important;
+}
+
+@media screen and (max-width: 576px) {
   footer {
     display: none;
   }
