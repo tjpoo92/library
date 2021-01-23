@@ -71,6 +71,11 @@ button.addbook {
   background-color: #f1f1f1;
 }
 
+.form-container input[type="checkbox"] {
+  padding: 15px;
+  margin: 5px 10px 22px 5px;
+}
+
 footer {
   position: fixed;
   left: 0;
