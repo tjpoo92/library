@@ -1,13 +1,5 @@
 //Array
-let myLibrary = [
-  {
-    bookTitle: "Where the Wild Things Are",
-    bookAuthor: "MS",
-    bookNumberOfPages: 15,
-    bookReadStatus: false,
-    bookArrayPosition: 0,
-  },
-];
+let myLibrary = [];
 
 //Constructor
 function Book(title, author, numberOfPages, readStatus) {
@@ -18,32 +10,16 @@ function Book(title, author, numberOfPages, readStatus) {
   this.bookArrayPosition = NaN;
 }
 
-//TODO: Duplicate checking on book creation, need to refactor into own function
-
 //Add Book Function
 function addBookToLibrary() {
-  const allTitles = document.querySelectorAll("h4");
-
-  //Error check for matching entries
-  for (let i = 0; i < allTitles.length; i++) {
-    if (
-      //Catch regardless of casing
-      allTitles[i].textContent.toLowerCase() == newBook.bookTitle.toLowerCase()
-    ) {
-      window.alert("This entry has already been added");
-      clearForm();
-      continue;
-    } else {
-      myLibrary.push(newBook);
-      clearForm();
-      newBook.bookArrayPosition = myLibrary.indexOf(newBook);
-      console.table(myLibrary);
-      createBookCards();
-    }
-  }
+  myLibrary.push(newBook);
+  clearForm();
+  newBook.bookArrayPosition = myLibrary.indexOf(newBook);
+  createBookCards();
 }
 const bodyContainer = document.querySelector(".body");
 function createBookCards() {
+  clearBooks();
   myLibrary.forEach((element) => {
     //Create the nodes
     const divCard = document.createElement("div");
@@ -59,7 +35,12 @@ function createBookCards() {
     //Give the nodes text from the form
     h4.textContent = element.bookTitle;
     paraAuthor.textContent = element.bookAuthor;
-    paraPages.textContent = `${element.bookNumberOfPages} pages`;
+    if (element.bookNumberOfPages == "") {
+      paraPages.textContent = "";
+    } else {
+      paraPages.textContent = `${element.bookNumberOfPages} pages`;
+    }
+    element.bookArrayPosition = myLibrary.indexOf(element);
 
     //Give classes to all nodes
     divCard.classList.add("card");
@@ -72,8 +53,12 @@ function createBookCards() {
     paraPages.classList.add("pages");
     formCard.setAttribute("action", "#");
     //Issues with simply adding the node and text content, innerHTML resolved the issue
-    label.innerHTML = '<input type="checkbox" name="read" value="Read" />Read';
-
+    if (element.bookReadStatus == "true") {
+      label.innerHTML = `<input type="checkbox" name="read" value="${element.bookArrayPosition}"  checked/>Read`;
+      divCard.classList.add("read");
+    } else {
+      label.innerHTML = `<input type="checkbox" name="read" value="${element.bookArrayPosition}" />Read`;
+    }
     //Build out the book card
     bodyContainer
       .appendChild(divCard)
@@ -87,6 +72,22 @@ function createBookCards() {
       .appendChild(label);
   });
   addDeleteListener();
+  addReadListener();
+  setCardBackground();
+  saveToLocalStorage();
+}
+
+function loadLocalStorage() {
+  myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+  if (myLibrary == null) {
+    myLibrary = [];
+  } else {
+    createBookCards();
+  }
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
 
 //Stop form default behavior and send to function
@@ -120,11 +121,56 @@ function addDeleteListener() {
   const deleteButtons = document.querySelectorAll(".delete");
   for (let i = 0; i < deleteButtons.length; i++) {
     deleteButtons[i].addEventListener("click", (e) => {
-      myLibrary.pop(e.target.value);
-      clearBooks();
+      myLibrary.splice(e.target.value, 1);
       createBookCards();
-      console.table(myLibrary);
     });
+  }
+}
+
+function addReadListener() {
+  const readCheckBox = document.querySelectorAll(
+    '.card input[type="checkbox"]'
+  );
+  for (let i = 0; i < readCheckBox.length; i++) {
+    readCheckBox[i].addEventListener("click", changeReadStatus);
+  }
+}
+
+function changeReadStatus(e) {
+  if (
+    myLibrary[e.target.value].bookReadStatus == "false" ||
+    myLibrary[e.target.value].bookReadStatus == false
+  ) {
+    myLibrary[e.target.value].bookReadStatus = true;
+    saveToLocalStorage();
+    setCardBackground();
+  } else if (
+    myLibrary[e.target.value].bookReadStatus == "true" ||
+    myLibrary[e.target.value].bookReadStatus == true
+  ) {
+    myLibrary[e.target.value].bookReadStatus = false;
+    saveToLocalStorage();
+    setCardBackground();
+  }
+}
+
+function setCardBackground() {
+  let tempCards = document.querySelectorAll(".card");
+  let tempCheckBox = document.querySelectorAll('.card input[type="checkbox"]');
+  for (let i = 0; i < myLibrary.length; i++) {
+    if (
+      myLibrary[i].bookReadStatus == "false" ||
+      myLibrary[i].bookReadStatus == false
+    ) {
+      tempCheckBox[i].removeAttribute("checked");
+      tempCards[i].style.backgroundColor = "lightgrey";
+    } else if (
+      myLibrary[i].bookReadStatus == "true" ||
+      myLibrary[i].bookReadStatus == true
+    ) {
+      tempCheckBox[i].setAttribute("checked", null);
+      tempCards[i].style.backgroundColor = "grey";
+    }
   }
 }
 
@@ -137,3 +183,5 @@ function clearBooks() {
 function clearForm() {
   form.reset();
 }
+
+loadLocalStorage();

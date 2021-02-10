@@ -63,7 +63,8 @@ button.addbook {
   background-color: white;
 }
 
-.form-container input[type="text"] {
+.form-container input[type="text"],
+.form-container input[type="number"] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
